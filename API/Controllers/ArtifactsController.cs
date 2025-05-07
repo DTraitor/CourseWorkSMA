@@ -33,7 +33,6 @@ public class ArtifactsController : ControllerBase
         return Ok(artifact);
     }
 
-    [Authorize]
     [HttpPost]
     public IActionResult Create([FromBody] ArtifactCreateDto dto)
     {
