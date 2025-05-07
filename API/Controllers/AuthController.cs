@@ -33,7 +33,8 @@ public class AuthController : ControllerBase
         {
             Username = dto.Username,
             Salt = salt,
-            PasswordHash = hash
+            PasswordHash = hash,
+            RefreshTokenHash = ""
         };
 
         _userRepo.Register(user);

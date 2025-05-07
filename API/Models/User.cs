@@ -9,10 +9,5 @@ public class User
 
     public string RefreshTokenHash { get; set; }
     public DateTime RefreshTokenExpiry { get; set; }
-
-    public List<SoftwareDevArtifact> UploadedArtifacts { get; set; } = new();
-    public List<DownloadHistory> DownloadHistory { get; set; } = new();
-    public List<ArtifactFeedback> Feedbacks { get; set; } = new();
-    public List<UserCategoryPreference> CategoryPreferences { get; set; } = new();
 }
 

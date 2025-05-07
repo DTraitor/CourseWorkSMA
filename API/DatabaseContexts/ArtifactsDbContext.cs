@@ -27,21 +27,6 @@ public class ArtifactsDbContext : DbContext
             .WithMany(c => c.Artifacts)
             .HasForeignKey(a => a.CategoryId);
 
-        modelBuilder.Entity<ArtifactVersion>()
-            .HasOne(v => v.Artifact)
-            .WithMany(a => a.Versions)
-            .HasForeignKey(v => v.SoftwareDevArtifactId);
-
-        modelBuilder.Entity<SoftwareDevArtifact>()
-            .HasOne(a => a.Uploader)
-            .WithMany(u => u.UploadedArtifacts)
-            .HasForeignKey(a => a.UploaderId);
-
-        modelBuilder.Entity<DownloadHistory>()
-            .HasOne(d => d.User)
-            .WithMany(u => u.DownloadHistory)
-            .HasForeignKey(d => d.UserId);
-
         modelBuilder.Entity<DownloadHistory>()
             .HasOne(d => d.Artifact)
             .WithMany()
@@ -62,11 +47,6 @@ public class ArtifactsDbContext : DbContext
             .WithMany(a => a.Feedbacks)
             .HasForeignKey(f => f.ArtifactId);
 
-        modelBuilder.Entity<ArtifactFeedback>()
-            .HasOne(f => f.User)
-            .WithMany(u => u.Feedbacks)
-            .HasForeignKey(f => f.UserId);
-
         modelBuilder.Entity<Category>()
             .HasMany(c => c.Subcategories)
             .WithOne(c => c.ParentCategory)
@@ -76,11 +56,6 @@ public class ArtifactsDbContext : DbContext
         modelBuilder.Entity<UserCategoryPreference>()
             .HasIndex(p => new { p.UserId, p.CategoryId })
             .IsUnique();
-
-        modelBuilder.Entity<UserCategoryPreference>()
-            .HasOne(p => p.User)
-            .WithMany(u => u.CategoryPreferences)
-            .HasForeignKey(p => p.UserId);
 
         modelBuilder.Entity<UserCategoryPreference>()
             .HasOne(p => p.Category)

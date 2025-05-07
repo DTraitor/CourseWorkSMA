@@ -9,5 +9,4 @@ public class ArtifactVersion
     public string DownloadUrl { get; set; }
 
     public int SoftwareDevArtifactId { get; set; }
-    public SoftwareDevArtifact Artifact { get; set; }
 }
