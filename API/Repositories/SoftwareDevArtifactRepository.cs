@@ -17,7 +17,7 @@ public class SoftwareDevArtifactRepository : Repository<SoftwareDevArtifact>, IS
     public new SoftwareDevArtifact GetById(int id)
     {
         return _context.Artifacts
-            .Where(a => a.CategoryId == id)
+            .Where(a => a.Id == id)
             .Include(a => a.Versions)
             .First();
     }
