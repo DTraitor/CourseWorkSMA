@@ -7,11 +7,9 @@ using System.ComponentModel.DataAnnotations;
 public class ArtifactCreateDto
 {
     [Required]
-    [MinLength(3)]
     public string Title { get; set; }
 
     [Required]
-    [MinLength(10)]
     public string Description { get; set; }
 
     [Required]

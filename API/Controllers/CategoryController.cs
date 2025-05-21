@@ -17,8 +17,8 @@ public class CategoryController : ControllerBase
         _uow = uow;
     }
 
-    // GET: /api/categories/tree
     [HttpGet("tree")]
+    [ProducesResponseType(typeof(IEnumerable<Category>), StatusCodes.Status200OK)]
     public IActionResult GetCategoryTree()
     {
         var roots = _uow.CategoryRepository.GetRootCategories();
@@ -27,6 +27,8 @@ public class CategoryController : ControllerBase
 
     [Authorize]
     [HttpPost]
+    [ProducesResponseType(typeof(Category), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult Create([FromBody] CategoryDto dto)
     {
         var category = new Category
@@ -42,6 +44,8 @@ public class CategoryController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult GetCategoryById(int id)
     {
         var cat = _uow.CategoryRepository.GetById(id);
@@ -50,6 +54,8 @@ public class CategoryController : ControllerBase
 
     [Authorize]
     [HttpPut("{id}")]
+    [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult Rename(int id, [FromBody] string newName)
     {
         var category = _uow.CategoryRepository.GetById(id);
@@ -64,6 +70,9 @@ public class CategoryController : ControllerBase
 
     [Authorize]
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult Delete(int id)
     {
         var category = _uow.CategoryRepository.GetById(id);
@@ -80,6 +89,8 @@ public class CategoryController : ControllerBase
 
     [Authorize]
     [HttpPost("rearrange")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public IActionResult Rearrange([FromBody] CategoryReorderDto dto)
     {
         try
@@ -96,6 +107,8 @@ public class CategoryController : ControllerBase
 
     [Authorize]
     [HttpPost("{id}/display")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public IActionResult SetDisplayPreference(int id, [FromBody] bool isExpanded)
     {
         var username = User.Identity?.Name;

@@ -14,6 +14,14 @@ public class SoftwareDevArtifactRepository : Repository<SoftwareDevArtifact>, IS
         _context = context;
     }
 
+    public void Delete(int id)
+    {
+        _context.Downloads.Where(r => r.ArtifactId == id).ExecuteDelete();
+        _context.ArtifactVersions.Where(r => r.SoftwareDevArtifactId == id).ExecuteDelete();
+        _context.Feedbacks.Where(r => r.ArtifactId == id).ExecuteDelete();
+        _context.Artifacts.Where(r => r.Id == id).ExecuteDelete();
+    }
+
     public new SoftwareDevArtifact GetById(int id)
     {
         return _context.Artifacts

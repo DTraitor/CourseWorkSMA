@@ -17,7 +17,6 @@ public class ArtifactsController : ControllerBase
         _uow = uow;
     }
 
-    // GET: /api/artifacts?search=lib&language=C#&framework=net8.0
     [HttpGet]
     public IActionResult GetAll([FromQuery] ArtifactSearchQuery query)
     {
@@ -74,6 +73,7 @@ public class ArtifactsController : ControllerBase
         if (artifact == null) return NotFound();
 
         _uow.SoftwareDevArtifactRepository.Delete(id);
+
         _uow.Save();
 
         return NoContent();

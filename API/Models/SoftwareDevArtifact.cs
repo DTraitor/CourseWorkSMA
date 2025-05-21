@@ -1,4 +1,6 @@
-﻿namespace API.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace API.Models;
 
 public class SoftwareDevArtifact
 {
@@ -15,6 +17,7 @@ public class SoftwareDevArtifact
     public string LicenseType { get; set; }
 
     public int CategoryId { get; set; }
+    [JsonIgnore]
     public Category Category { get; set; }
 
     public int UploaderId { get; set; }

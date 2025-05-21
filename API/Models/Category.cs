@@ -1,4 +1,6 @@
-﻿namespace API.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace API.Models;
 
 public class Category
 {
@@ -6,12 +8,13 @@ public class Category
     public string Name { get; set; }
 
     public int? ParentCategoryId { get; set; }
-    public Category? ParentCategory { get; set; }
+    [JsonIgnore]
+    public Category ParentCategory { get; set; }
     public List<Category> Subcategories { get; set; } = new();
 
     public List<SoftwareDevArtifact> Artifacts { get; set; } = new();
 
-    public int OrderIndex { get; set; } // NEW — used for drag-drop reordering
+    public int OrderIndex { get; set; }
 
     public void AddSubcategory(Category subcategory) => Subcategories.Add(subcategory);
     public void DeleteSubcategory(Category subcategory) => Subcategories.Remove(subcategory);
