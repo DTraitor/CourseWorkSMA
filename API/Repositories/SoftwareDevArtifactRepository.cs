@@ -95,13 +95,13 @@ public class SoftwareDevArtifactRepository : Repository<SoftwareDevArtifact>, IS
             .ToList();
     }
 
-    public IEnumerable<SoftwareDevArtifact> FilterByCombinedCriteria(ArtifactSearchQuery query)
+    public IEnumerable<SoftwareDevArtifact> FilterByCombinedCriteria(ArtifactSearchQueryOld queryOld)
     {
         var artifacts = _context.Artifacts.AsQueryable();
 
-        if (!string.IsNullOrEmpty(query.SearchTerm))
+        if (!string.IsNullOrEmpty(queryOld.SearchTerm))
         {
-            string term = query.SearchTerm.ToLower();
+            string term = queryOld.SearchTerm.ToLower();
 
             artifacts = artifacts.Where(a =>
                 a.Title.ToLower().Contains(term) ||
@@ -114,38 +114,38 @@ public class SoftwareDevArtifactRepository : Repository<SoftwareDevArtifact>, IS
             );
         }
 
-        if (!string.IsNullOrEmpty(query.ProgrammingLanguage))
+        if (!string.IsNullOrEmpty(queryOld.ProgrammingLanguage))
         {
-            artifacts = artifacts.Where(a => a.ProgrammingLanguage == query.ProgrammingLanguage);
+            artifacts = artifacts.Where(a => a.ProgrammingLanguage == queryOld.ProgrammingLanguage);
         }
 
-        if (!string.IsNullOrEmpty(query.Framework))
+        if (!string.IsNullOrEmpty(queryOld.Framework))
         {
-            artifacts = artifacts.Where(a => a.Framework == query.Framework);
+            artifacts = artifacts.Where(a => a.Framework == queryOld.Framework);
         }
 
-        if (!string.IsNullOrEmpty(query.LicenseType))
+        if (!string.IsNullOrEmpty(queryOld.LicenseType))
         {
-            artifacts = artifacts.Where(a => a.LicenseType == query.LicenseType);
+            artifacts = artifacts.Where(a => a.LicenseType == queryOld.LicenseType);
         }
 
-        if (query.CategoryId.HasValue)
+        if (queryOld.CategoryId.HasValue)
         {
-            artifacts = artifacts.Where(a => a.CategoryId == query.CategoryId.Value);
+            artifacts = artifacts.Where(a => a.CategoryId == queryOld.CategoryId.Value);
         }
 
         // Sorting
-        artifacts = query.SortBy switch
+        artifacts = queryOld.SortBy switch
         {
-            "Title" => query.SortDescending ? artifacts.OrderByDescending(a => a.Title) : artifacts.OrderBy(a => a.Title),
-            "Author" => query.SortDescending ? artifacts.OrderByDescending(a => a.Author) : artifacts.OrderBy(a => a.Author),
-            _ => query.SortDescending ? artifacts.OrderByDescending(a => a.Created) : artifacts.OrderBy(a => a.Created)
+            "Title" => queryOld.SortDescending ? artifacts.OrderByDescending(a => a.Title) : artifacts.OrderBy(a => a.Title),
+            "Author" => queryOld.SortDescending ? artifacts.OrderByDescending(a => a.Author) : artifacts.OrderBy(a => a.Author),
+            _ => queryOld.SortDescending ? artifacts.OrderByDescending(a => a.Created) : artifacts.OrderBy(a => a.Created)
         };
 
         // Paging
         artifacts = artifacts
-            .Skip((query.PageNumber - 1) * query.PageSize)
-            .Take(query.PageSize);
+            .Skip((queryOld.PageNumber - 1) * queryOld.PageSize)
+            .Take(queryOld.PageSize);
 
         return artifacts
             .Include(a => a.Versions)

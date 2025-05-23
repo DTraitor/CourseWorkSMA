@@ -33,6 +33,7 @@ builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 // 💉 Auth Services
 builder.Services.AddSingleton(rsaPrivateKey);
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 // 🔐 Add JWT Auth using RS256
 builder.Services.AddAuthentication(options =>

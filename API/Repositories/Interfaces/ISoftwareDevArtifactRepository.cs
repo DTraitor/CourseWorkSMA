@@ -11,5 +11,5 @@ public interface ISoftwareDevArtifactRepository : IRepository<SoftwareDevArtifac
     IEnumerable<SoftwareDevArtifact> FilterByProgrammingLanguage(string language);
     IEnumerable<SoftwareDevArtifact> FilterByFramework(string framework);
     IEnumerable<SoftwareDevArtifact> FilterByLicenseType(string licenseType);
-    IEnumerable<SoftwareDevArtifact> FilterByCombinedCriteria(ArtifactSearchQuery query);
+    IEnumerable<SoftwareDevArtifact> FilterByCombinedCriteria(ArtifactSearchQueryOld queryOld);
 }

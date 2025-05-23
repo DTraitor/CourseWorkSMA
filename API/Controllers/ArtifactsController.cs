@@ -18,9 +18,9 @@ public class ArtifactsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll([FromQuery] ArtifactSearchQuery query)
+    public IActionResult GetAll([FromQuery] ArtifactSearchQueryOld queryOld)
     {
-        var results = _uow.SoftwareDevArtifactRepository.FilterByCombinedCriteria(query);
+        var results = _uow.SoftwareDevArtifactRepository.FilterByCombinedCriteria(queryOld);
         return Ok(results);
     }
 
